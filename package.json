@@ -1,0 +1,23 @@
+{
+  "name": "next-absolute-url",
+  "version": "1.0.0",
+  "description": "Get the absolute URL of your Next.js app (and optionally set a dev url)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jekrb/next-absolute-url.git"
+  },
+  "keywords": [
+    "Next.js",
+    "localhost",
+    "development",
+    "absolute",
+    "URL"
+  ],
+  "author": "Jake Burden <jake@doge.haus>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jekrb/next-absolute-url/issues"
+  },
+  "homepage": "https://github.com/jekrb/next-absolute-url#readme"
+}
