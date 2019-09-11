@@ -1,6 +1,6 @@
 {
   "name": "next-absolute-url",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Get the absolute URL of your Next.js app (and optionally set a dev url)",
   "main": "index.js",
   "repository": {
