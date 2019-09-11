@@ -12,6 +12,14 @@ const { protocol, host } = absoluteUrl(req, 'localhost:8004')
 const apiURL = `${protocol}//${host}/api/job.js`
 ```
 
+or if you just want the full URL origin:
+
+```js
+import absoluteUrl from 'next-absolute-url'
+const { origin } = absoluteUrl(req)
+const apiURL = `${origin}/api/job.js`
+```
+
 If you deployed your Next.js app with `now` the `apiURL` will be something like `https://your-app.now.sh/api/job.js`.
 
 However, if you are running the app locally the `apiURL` will be `http://localhost:8004/api/job.js` instead.
