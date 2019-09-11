@@ -8,7 +8,8 @@ function absoluteUrl(req, setLocalhost) {
 
   return {
     protocol: protocol,
-    host: host
+    host: host,
+    origin: protocol + '//' + host
   };
 }
 
