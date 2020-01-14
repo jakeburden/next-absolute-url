@@ -1,16 +1,19 @@
-function absoluteUrl(req, setLocalhost) {
-  var protocol = 'https:';
-  var host = req ? (req.headers['x-forwarded-host'] || req.headers['host']) : window.location.host;
-  if (host.indexOf('localhost') > -1) {
-    if (setLocalhost) host = setLocalhost;
-    protocol = 'http:';
+'use strict'
+exports.__esModule = true
+function absoluteUrl(req, localhostAdress) {
+  if (localhostAdress === void 0) {
+    localhostAdress = 'localhost:3000'
   }
-
+  var protocol = 'https:'
+  var host = req ? req.headers['host'] : window.location.host
+  if (!host || /^localhost(:\d+)?$/.test(host)) {
+    host = localhostAdress
+    protocol = 'http:'
+  }
   return {
     protocol: protocol,
     host: host,
-    origin: protocol + '//' + host
-  };
+    origin: protocol + '//' + host,
+  }
 }
-
-module.exports = absoluteUrl;
+exports['default'] = absoluteUrl
