@@ -4,7 +4,15 @@
   "description": "Get the absolute URL of your Next.js app (and optionally set a dev url)",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --declaration true index.ts && prettier --write index.ts index.js"
+    "build": "tsc --declaration true index.ts && prettier --write index.ts index.js",
+    "postbuild": "git add index.js index.d.ts",
+    "test": "jest"
+  },
+  "git": {
+    "pre-commit": [
+      "build",
+      "test"
+    ]
   },
   "repository": {
     "type": "git",
@@ -24,8 +32,12 @@
   },
   "homepage": "https://github.com/jekrb/next-absolute-url#readme",
   "devDependencies": {
+    "@types/jest": "24.0.25",
     "@types/node": "13.1.6",
+    "@zeit/git-hooks": "0.1.4",
+    "jest": "24.9.0",
     "prettier": "1.19.1",
+    "ts-jest": "24.3.0",
     "typescript": "3.7.4"
   }
 }

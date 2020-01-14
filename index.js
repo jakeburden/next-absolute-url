@@ -4,12 +4,8 @@ function absoluteUrl(req, localhostAdress) {
   if (localhostAdress === void 0) {
     localhostAdress = 'localhost:3000'
   }
-  var protocol = 'https:'
-  var host = req ? req.headers['host'] : window.location.host
-  if (!host || /^localhost(:\d+)?$/.test(host)) {
-    host = localhostAdress
-    protocol = 'http:'
-  }
+  var host = (req ? req.headers.host : window.location.host) || localhostAdress
+  var protocol = /^localhost(:\d+)?$/.test(host) ? 'http:' : 'https:'
   return {
     protocol: protocol,
     host: host,
