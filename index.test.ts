@@ -138,3 +138,25 @@ describe('host is localhost', () => {
     expect(host).toBe('localhost:7000')
   })
 })
+
+
+describe('behind a proxy', () => {
+  test('should use the x-forwarded headers', () => {
+    const req = {
+      headers: {
+        host: 'localhost:41560',
+        'x-forwarded-host': 'localhost:5000',
+        'x-forwarded-proto': 'http',
+        'x-forwarded-port': '5000',
+        'x-forwarded-for': '::ffff:127.0.0.1',
+      },
+    } as any
+
+    const { protocol, host, origin } = nextAbsoluteUrl(req)
+
+    expect(origin).toBe('http://localhost:5000')
+    expect(protocol).toBe('http:')
+    expect(host).toBe('localhost:5000')
+  })
+
+})
