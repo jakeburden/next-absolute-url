@@ -4,7 +4,8 @@ function absoluteUrl(
   req?: IncomingMessage,
   localhostAddress = 'localhost:3000'
 ) {
-  let host = (req ? req.headers.host : window.location.host) || localhostAddress
+  let host =
+    (req?.headers ? req.headers.host : window.location.host) || localhostAddress
   let protocol = /^localhost(:\d+)?$/.test(host) ? 'http:' : 'https:'
 
   if (
