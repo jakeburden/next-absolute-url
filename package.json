@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc --declaration true index.ts && prettier --write index.ts index.js",
     "postbuild": "git add index.js index.d.ts",
-    "test": "jest"
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
   "git": {
     "pre-commit": [
