@@ -28,7 +28,7 @@ However, if you are running the app locally the `apiURL` will be `http://localho
 
 ## Install
 
-With [npm](https://npmjs.org/) installed, run
+With [NPM](https://npmjs.org/) installed.
 
 ```sh
 npm install next-absolute-url
