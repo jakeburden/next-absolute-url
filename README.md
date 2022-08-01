@@ -6,7 +6,7 @@ This module enables you to easily get the protocol and host of your Next.js app,
 
 ## Usage
 
-> I'm honored that an excellent blog post has been published about this package. For detailed usage, please see: https://codeconqueror.com/blog/get-the-current-url-in-next-js
+> I'm honored that an excellent blog post has been published about this package. For detailed usage, please see: https://web.archive.org/web/20211110110818/https://codeconqueror.com/blog/get-the-current-url-in-next-js/
 
 ```js
 import absoluteUrl from 'next-absolute-url'
