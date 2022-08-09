@@ -14,6 +14,12 @@ const { protocol, host } = absoluteUrl(req, 'localhost:8004')
 const apiURL = `${protocol}//${host}/api/job.js`
 ```
 
+```js
+import absoluteUrl from 'next-absolute-url'
+const { protocol, host } = absoluteUrl(req, '', { https: true }) // protocol will be https
+const apiURL = `${protocol}//${host}/api/job.js`
+```
+
 or if you just want the full URL origin:
 
 ```js

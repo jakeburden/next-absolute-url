@@ -42,14 +42,55 @@ describe('host is corrupted (is empty somehow)', () => {
     expect(protocol).toBe('http:')
     expect(host).toBe('localhost:10000')
   })
+  test('protocol should be http for loopback', () => {
+    const req = {
+      headers: {
+        host: '127.0.0.1:3000',
+      },
+    } as IncomingMessage
+    const { protocol, host, origin } = nextAbsoluteUrl(req)
+    expect(origin).toBe('http://127.0.0.1:3000')
+    expect(protocol).toBe('http:')
+    expect(host).toBe('127.0.0.1:3000')
+  })
+  test('protocol should be http for ip', () => {
+    const req = {
+      headers: {
+        host: '192.168.0.1:3000',
+      },
+    } as IncomingMessage
+    const { protocol, host, origin } = nextAbsoluteUrl(req)
+    expect(origin).toBe('http://192.168.0.1:3000')
+    expect(protocol).toBe('http:')
+    expect(host).toBe('192.168.0.1:3000')
+  })
+  test('protocol should be https for ip , if user passed customised parameter https:true', () => {
+    const req = {
+      headers: {
+        host: '192.168.0.1:3000',
+      },
+    } as IncomingMessage
+    const { protocol, host, origin } = nextAbsoluteUrl(req, '', { https: true })
+    expect(origin).toBe('https://192.168.0.1:3000')
+    expect(protocol).toBe('https:')
+    expect(host).toBe('192.168.0.1:3000')
+  })
 })
 
 describe('host is remote', () => {
+  const OLD_ENV = process.env
+
   beforeAll(() => {
     window.location.host = 'example.com'
+    jest.resetModules() // most important - it clears the cache
+    process.env = { ...OLD_ENV } // make a copy
+  })
+  afterAll(() => {
+    process.env = OLD_ENV // restore old env
   })
 
   test('no values', () => {
+    process.env.NODE_ENV = 'production'
     const { protocol, host, origin } = nextAbsoluteUrl()
     expect(origin).toBe('https://example.com')
     expect(protocol).toBe('https:')
@@ -88,6 +129,29 @@ describe('host is remote', () => {
     expect(origin).toBe('https://example.com')
     expect(protocol).toBe('https:')
     expect(host).toBe('example.com')
+  })
+  test('protocol should be https for ip on production', () => {
+    const req = {
+      headers: {
+        host: '44.45.46.55',
+      },
+    } as IncomingMessage
+    const { protocol, host, origin } = nextAbsoluteUrl(req)
+    expect(origin).toBe('https://44.45.46.55')
+    expect(protocol).toBe('https:')
+    expect(host).toBe('44.45.46.55')
+  })
+  test('pass custom parameter for https, if NODE_ENV not passed Correctly', () => {
+    process.env.NODE_ENV = 'some wrong NODE_ENV'
+    const req = {
+      headers: {
+        host: '44.45.46.55',
+      },
+    } as IncomingMessage
+    const { protocol, host, origin } = nextAbsoluteUrl(req, '', { https: true })
+    expect(origin).toBe('https://44.45.46.55')
+    expect(protocol).toBe('https:')
+    expect(host).toBe('44.45.46.55')
   })
 })
 
@@ -139,7 +203,6 @@ describe('host is localhost', () => {
   })
 })
 
-
 describe('behind a proxy', () => {
   test('should use the x-forwarded headers', () => {
     const req = {
@@ -158,5 +221,4 @@ describe('behind a proxy', () => {
     expect(protocol).toBe('http:')
     expect(host).toBe('localhost:5000')
   })
-
 })
