@@ -30,6 +30,17 @@ describe('host is corrupted (is empty somehow)', () => {
     expect(protocol).toBe('http:')
     expect(host).toBe('localhost:9000')
   })
+  
+  test('only from local network passed in', () => {
+    window.location.host = '192.168.88.156:4000'
+    const { protocol, host, origin } = nextAbsoluteUrl(
+      undefined,
+      'localhost:6000'
+    )
+    expect(origin).toBe('http://192.168.88.156:4000')
+    expect(protocol).toBe('http:')
+    expect(host).toBe('localhost:4000')
+  })
 
   test('both arguments are passed in', () => {
     const req = {
