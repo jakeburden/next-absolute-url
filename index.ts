@@ -6,7 +6,7 @@ function absoluteUrl(
 ) {
   let host =
     (req?.headers ? req.headers.host : window.location.host) || localhostAddress
-  let protocol = /^localhost(:\d+)?$/.test(host) ? 'http:' : 'https:'
+  let protocol = isLocalNetwork(host) ? 'http:' : 'https:'
 
   if (
     req &&
@@ -29,6 +29,16 @@ function absoluteUrl(
     host,
     origin: protocol + '//' + host,
   }
+}
+
+function isLocalNetwork(hostname = window.location.host) {
+    return (
+        hostname.startsWith('localhost') ||
+        hostname.startsWith('127.0.0.1') ||
+        hostname.startsWith('192.168.') ||
+        hostname.startsWith('10.0.') ||
+        hostname.endsWith('.local')
+    );
 }
 
 export default absoluteUrl
