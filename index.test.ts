@@ -179,4 +179,22 @@ describe('behind a proxy', () => {
     expect(protocol).toBe('http:')
     expect(host).toBe('localhost:5000')
   })
+
+  test('should use the first value of x-forwarded-proto', () => {
+    const req = {
+      headers: {
+        host: 'localhost:41560',
+        'x-forwarded-host': 'localhost:5000',
+        'x-forwarded-proto': 'https, http',
+        'x-forwarded-port': '5000',
+        'x-forwarded-for': '::ffff:127.0.0.1',
+      },
+    } as any
+
+    const { protocol, host, origin } = nextAbsoluteUrl(req)
+
+    expect(origin).toBe('https://localhost:5000')
+    expect(protocol).toBe('https:')
+    expect(host).toBe('localhost:5000')
+  })
 })

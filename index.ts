@@ -21,7 +21,7 @@ function absoluteUrl(
     req.headers['x-forwarded-proto'] &&
     typeof req.headers['x-forwarded-proto'] === 'string'
   ) {
-    protocol = `${req.headers['x-forwarded-proto']}:`
+    protocol = `${req.headers['x-forwarded-proto'].split(',')[0]}:`
   }
 
   return {
@@ -32,13 +32,13 @@ function absoluteUrl(
 }
 
 function isLocalNetwork(hostname = window.location.host) {
-    return (
-        hostname.startsWith('localhost') ||
-        hostname.startsWith('127.0.0.1') ||
-        hostname.startsWith('192.168.') ||
-        hostname.startsWith('10.0.') ||
-        hostname.endsWith('.local')
-    );
+  return (
+    hostname.startsWith('localhost') ||
+    hostname.startsWith('127.0.0.1') ||
+    hostname.startsWith('192.168.') ||
+    hostname.startsWith('10.0.') ||
+    hostname.endsWith('.local')
+  )
 }
 
 export default absoluteUrl

@@ -24,7 +24,7 @@ function absoluteUrl(req, localhostAddress) {
     req.headers['x-forwarded-proto'] &&
     typeof req.headers['x-forwarded-proto'] === 'string'
   ) {
-    protocol = req.headers['x-forwarded-proto'] + ':'
+    protocol = req.headers['x-forwarded-proto'].split(',')[0] + ':'
   }
   return {
     protocol: protocol,
