@@ -17,7 +17,7 @@ function absoluteUrl(req, localhostAddress) {
     req.headers['x-forwarded-host'] &&
     typeof req.headers['x-forwarded-host'] === 'string'
   ) {
-    host = req.headers['x-forwarded-host']
+    host = req.headers['x-forwarded-host'].split(',')[0]
   }
   if (
     req &&
